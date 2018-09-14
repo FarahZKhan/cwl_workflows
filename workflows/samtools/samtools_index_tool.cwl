@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 doc: |
-    A wrapper for running `samtools index <bam>`.
+    A wrapper for running `samtools index <cram>`.
 
 cwlVersion: v1.0
 class: CommandLineTool
@@ -9,10 +9,13 @@ baseCommand: [ samtools, index ]
 
 requirements:
   DockerRequirement:
-    dockerPull: quay.io/biocontainers/samtools:1.8--4
+    dockerPull: statgen/alignment:1.0.0
   InitialWorkDirRequirement:
     listing:
       - $(inputs.input_bam)
+  ResourceRequirement:
+    ramMin: 7500
+    coresMin: 2
 
 inputs:
   input_bam:
@@ -25,6 +28,4 @@ outputs:
   bam_index:
     type: File
     outputBinding:
-      glob: $(inputs.input_bam.basename)
-    secondaryFiles:
-      - .bai
+      glob: '*.crai'
