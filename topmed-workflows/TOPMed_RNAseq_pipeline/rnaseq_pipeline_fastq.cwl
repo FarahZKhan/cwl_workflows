@@ -21,11 +21,6 @@ label: "TOPMed_RNA-seq"
 requirements:
   SubworkflowFeatureRequirement: {}
   StepInputExpressionRequirement: {}
-# hints:
-#   ResourceRequirement:
-#     coresMin: 4
-#     ramMin: 16
-#     #tmpdirMin: 51200
 
 inputs:
   star_index:
@@ -53,11 +48,6 @@ inputs:
       - ^.dict
   rnaseqc_flags:
     type: string[]
-  # gatk_flags:
-  #   type:
-  #     type: "null"
-  #     type: array
-  #     items: string
 
 outputs:
   star_output_bam:
@@ -191,7 +181,6 @@ steps:
       genome_fasta: genome_fasta
       prefix_str: prefix_str
       rnaseqc_flags: rnaseqc_flags
-      # gatk_flags: gatk_flags
     out:
       [
         gene_rpkm,
