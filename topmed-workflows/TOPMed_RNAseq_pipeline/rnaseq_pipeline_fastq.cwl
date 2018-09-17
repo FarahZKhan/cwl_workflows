@@ -72,12 +72,6 @@ outputs:
   star_output_chimeric_junctions:
     outputSource: run_star/chimeric_junctions
     type: File
-  star_output_chimeric_bam_file:
-    outputSource: sort_chimeras/output_file
-    type: File
-  star_output_chimeric_bam_index:
-    outputSource: index_chimeras/bam_index
-    type: File
   star_output_read_counts:
     outputSource: run_star/read_counts
     type: File
@@ -150,26 +144,10 @@ steps:
         valueFrom: $(self).Aligned.sortedByCoord.out.bam
     out: [ output_file ]
 
-  sort_chimeras:
-    run: samtools-sort.cwl
-    in:
-      input:
-        source: run_star/chimeric_bam
-      output_name:
-        source: prefix_str
-        valueFrom: $(self).Chimeric.out.sorted.bam
-    out: [ output_file ]
-
   index_bam:
     run: indexbam.cwl
     in:
       input_bam: sort_bam/output_file
-    out: [bam_index]
-
-  index_chimeras:
-    run: indexbam.cwl
-    in:
-      input_bam: sort_chimeras/output_file
     out: [bam_index]
 
   run_markduplicates:
